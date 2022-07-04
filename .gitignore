@@ -164,3 +164,7 @@ public/robots.txt
 
 .scannerwork
 .env
+public/video/hands.jpeg
+public/video/hands.mp4
+public/video/hands.ogv
+public/video/hands.webm
