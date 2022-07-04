@@ -1,4 +1,11 @@
 <script setup lang="ts">
+import { ref } from 'vue'
+
+const consumableSubsidebarLinks = ref('')
+const recurringSubsidebarLinks = ref('')
+const accountSubsidebarLinks = ref('')
+const flashSubsidebarLinks = ref('')
+
 const emit = defineEmits(['close'])
 </script>
 
@@ -6,22 +13,37 @@ const emit = defineEmits(['close'])
   <div class="sidebar-panel is-generic">
     <div class="subpanel-header">
       <h3 class="no-mb">Promos</h3>
-      <div class="panel-close" @click="emit('close')">
+      <div
+        class="panel-close"
+        @click="emit('close')"
+        @keypress.space.prevent="emit('close')"
+      >
         <i aria-hidden="true" class="iconify" data-icon="feather:x"></i>
       </div>
     </div>
     <div class="inner" data-simplebar>
       <ul>
-        <li v-has-nested-router-link class="has-children">
+        <VCollapseLinks v-model:open="consumableSubsidebarLinks" collapse-id="lists">
+          <template #header>
+            <i aria-hidden="true" class="lnil lnil-package pr-3"></i>
+            Consumable
+            <i aria-hidden="true" class="iconify" data-icon="feather:chevron-right" />
+          </template>
+          <RouterLink :to="{ name: 'index' }" class="is-submenu">
+            <i aria-hidden="true" class="lnil lnil-list-alt pr-3"></i>
+            <span>List</span>
+          </RouterLink>
+          <RouterLink :to="{ name: 'index' }" class="is-submenu">
+            <i aria-hidden="true" class="lnil lnil-list-alt pr-3"></i>
+            <span>Add Consumable Promo</span>
+          </RouterLink>
+        </VCollapseLinks>
+        <!-- <li v-has-nested-router-link class="has-children">
           <div class="collapse-wrap">
             <a class="parent-link">
               <i aria-hidden="true" class="lnil lnil-ticket-alt pr-3"></i>
               Consumable
-              <i
-                aria-hidden="true"
-                class="iconify"
-                data-icon="feather:chevron-right"
-              />
+              <i aria-hidden="true" class="iconify" data-icon="feather:chevron-right" />
             </a>
           </div>
           <ul>
@@ -46,17 +68,30 @@ const emit = defineEmits(['close'])
               </RouterLink>
             </li>
           </ul>
-        </li>
-        <li v-has-nested-router-link class="has-children">
+        </li> -->
+
+        <VCollapseLinks v-model:open="recurringSubsidebarLinks" collapse-id="lists">
+          <template #header>
+            <i aria-hidden="true" class="lnil lnil-package pr-3"></i>
+            Recurring
+            <i aria-hidden="true" class="iconify" data-icon="feather:chevron-right" />
+          </template>
+          <RouterLink :to="{ name: 'index' }" class="is-submenu">
+            <i aria-hidden="true" class="lnil lnil-list-alt pr-3"></i>
+            <span>List</span>
+          </RouterLink>
+          <RouterLink :to="{ name: 'index' }" class="is-submenu">
+            <i aria-hidden="true" class="lnil lnil-list-alt pr-3"></i>
+            <span>Add Recurring Promo</span>
+          </RouterLink>
+        </VCollapseLinks>
+
+        <!-- <li v-has-nested-router-link class="has-children">
           <div class="collapse-wrap">
             <a class="parent-link">
               <i aria-hidden="true" class="lnil lnil-reload pr-3"></i>
               Recurring
-              <i
-                aria-hidden="true"
-                class="iconify"
-                data-icon="feather:chevron-right"
-              />
+              <i aria-hidden="true" class="iconify" data-icon="feather:chevron-right" />
             </a>
           </div>
           <ul>
@@ -81,17 +116,26 @@ const emit = defineEmits(['close'])
               </RouterLink>
             </li>
           </ul>
-        </li>
-        <li v-has-nested-router-link class="has-children">
+        </li> -->
+
+        <VCollapseLinks v-model:open="flashSubsidebarLinks" collapse-id="lists">
+          <template #header>
+            <i aria-hidden="true" class="lnil lnil-package pr-3"></i>
+            Flash Deals
+            <i aria-hidden="true" class="iconify" data-icon="feather:chevron-right" />
+          </template>
+          <RouterLink :to="{ name: 'index' }" class="is-submenu">
+            <i aria-hidden="true" class="lnil lnil-list-alt pr-3"></i>
+            <span>Add Flash Promo</span>
+          </RouterLink>
+        </VCollapseLinks>
+
+        <!-- <li v-has-nested-router-link class="has-children">
           <div class="collapse-wrap">
             <a class="parent-link">
               <i aria-hidden="true" class="lnil lnil-thunderbolt pr-3"></i>
               Flash Deals
-              <i
-                aria-hidden="true"
-                class="iconify"
-                data-icon="feather:chevron-right"
-              />
+              <i aria-hidden="true" class="iconify" data-icon="feather:chevron-right" />
             </a>
           </div>
           <ul>
@@ -106,17 +150,30 @@ const emit = defineEmits(['close'])
               </RouterLink>
             </li>
           </ul>
-        </li>
+        </li> -->
+
+        <VCollapseLinks v-model:open="accountSubsidebarLinks" collapse-id="lists">
+          <template #header>
+            <i aria-hidden="true" class="lnil lnil-package pr-3"></i>
+            Account Generated
+            <i aria-hidden="true" class="iconify" data-icon="feather:chevron-right" />
+          </template>
+          <RouterLink :to="{ name: 'index' }" class="is-submenu">
+            <i aria-hidden="true" class="lnil lnil-list-alt pr-3"></i>
+            <span>List</span>
+          </RouterLink>
+          <RouterLink :to="{ name: 'index' }" class="is-submenu">
+            <i aria-hidden="true" class="lnil lnil-list-alt pr-3"></i>
+            <span>Menu</span>
+          </RouterLink>
+        </VCollapseLinks>
+
         <li v-has-nested-router-link class="has-children">
           <div class="collapse-wrap">
             <a class="parent-link">
               <i aria-hidden="true" class="lnil lnil-table pr-3"></i>
               Account Generated
-              <i
-                aria-hidden="true"
-                class="iconify"
-                data-icon="feather:chevron-right"
-              />
+              <i aria-hidden="true" class="iconify" data-icon="feather:chevron-right" />
             </a>
           </div>
           <ul>

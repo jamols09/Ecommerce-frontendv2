@@ -1,4 +1,7 @@
 <script setup lang="ts">
+import { ref } from 'vue'
+const customerSubsidebarLinks = ref('')
+const employeeSubsidebarLinks = ref('')
 const emit = defineEmits(['close'])
 </script>
 
@@ -16,7 +19,23 @@ const emit = defineEmits(['close'])
     </div>
     <div class="inner" data-simplebar>
       <ul>
-        <li v-has-nested-router-link class="has-children">
+        <VCollapseLinks v-model:open="customerSubsidebarLinks" collapse-id="lists">
+          <template #header>
+            <i aria-hidden="true" class="lnil lnil-package pr-3"></i>
+            Customers
+            <i aria-hidden="true" class="iconify" data-icon="feather:chevron-right" />
+          </template>
+          <RouterLink :to="{ name: 'index' }" class="is-submenu">
+            <i aria-hidden="true" class="lnil lnil-list-alt pr-3"></i>
+            <span>List</span>
+          </RouterLink>
+          <RouterLink :to="{ name: 'index' }" class="is-submenu">
+            <i aria-hidden="true" class="lnil lnil-circle-plus pr-3"></i>
+            <span>New Customer</span>
+          </RouterLink>
+        </VCollapseLinks>
+        <!-- <li v-has-nested-router-link class="has-children">
+          
           <div class="collapse-wrap">
             <a class="parent-link">
               <i aria-hidden="true" class="lnil lnil-user pr-3"></i>
@@ -25,6 +44,7 @@ const emit = defineEmits(['close'])
             </a>
           </div>
           <ul>
+
             <li>
               <RouterLink
                 :to="{ name: 'app-people-customers-list' }"
@@ -46,8 +66,23 @@ const emit = defineEmits(['close'])
               </RouterLink>
             </li>
           </ul>
-        </li>
-        <li v-has-nested-router-link class="has-children">
+        </li> -->
+        <VCollapseLinks v-model:open="employeeSubsidebarLinks" collapse-id="lists">
+          <template #header>
+            <i aria-hidden="true" class="lnil lnil-package pr-3"></i>
+            Employees
+            <i aria-hidden="true" class="iconify" data-icon="feather:chevron-right" />
+          </template>
+          <RouterLink :to="{ name: 'index' }" class="is-submenu">
+            <i aria-hidden="true" class="lnil lnil-list-alt pr-3"></i>
+            <span>List</span>
+          </RouterLink>
+          <RouterLink :to="{ name: 'index' }" class="is-submenu">
+            <i aria-hidden="true" class="lnil lnil-circle-plus pr-3"></i>
+            <span>New Employee</span>
+          </RouterLink>
+        </VCollapseLinks>
+        <!-- <li v-has-nested-router-link class="has-children">
           <div class="collapse-wrap">
             <a class="parent-link">
               <i aria-hidden="true" class="lnil lnil-user pr-3"></i>
@@ -77,7 +112,7 @@ const emit = defineEmits(['close'])
               </RouterLink>
             </li>
           </ul>
-        </li>
+        </li> -->
       </ul>
     </div>
   </div>

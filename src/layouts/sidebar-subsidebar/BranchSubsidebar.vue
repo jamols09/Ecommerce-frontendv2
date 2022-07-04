@@ -25,7 +25,7 @@ const emit = defineEmits(['close'])
         <li>
           <RouterLink :to="{ name: 'app' }" title="Add order">
             <i aria-hidden="true" class="lnil lnil-circle-plus pr-3"></i>
-            Add
+            New Branch
           </RouterLink>
         </li>
       </ul>

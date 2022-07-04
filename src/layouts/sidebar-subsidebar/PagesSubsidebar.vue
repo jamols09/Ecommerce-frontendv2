@@ -6,7 +6,11 @@ const emit = defineEmits(['close'])
   <div class="sidebar-panel is-generic">
     <div class="subpanel-header">
       <h3 class="no-mb">Pages</h3>
-      <div class="panel-close" @click="emit('close')">
+      <div
+        class="panel-close"
+        @click="emit('close')"
+        @keydown.space.prevent="emit('close')"
+      >
         <i aria-hidden="true" class="iconify" data-icon="feather:x"></i>
       </div>
     </div>
@@ -61,30 +65,18 @@ const emit = defineEmits(['close'])
             <a class="parent-link">
               <i aria-hidden="true" class="lnil lnil-laptop pr-3"></i>
               Blog
-              <i
-                aria-hidden="true"
-                class="iconify"
-                data-icon="feather:chevron-right"
-              />
+              <i aria-hidden="true" class="iconify" data-icon="feather:chevron-right" />
             </a>
           </div>
           <ul>
             <li>
-              <RouterLink
-                :to="{ name: 'app' }"
-                class="is-submenu"
-                title="Blog list"
-              >
+              <RouterLink :to="{ name: 'app' }" class="is-submenu" title="Blog list">
                 <i aria-hidden="true" class="lnil lnil-list pr-3"></i>
                 <span>List</span>
               </RouterLink>
             </li>
             <li>
-              <RouterLink
-                :to="{ name: 'app' }"
-                class="is-submenu"
-                title="Add blog"
-              >
+              <RouterLink :to="{ name: 'app' }" class="is-submenu" title="Add blog">
                 <i aria-hidden="true" class="lnil lnil-circle-plus pr-3"></i>
                 <span>Add</span>
               </RouterLink>

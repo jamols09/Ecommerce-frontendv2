@@ -28,11 +28,11 @@ const emit = defineEmits(['close'])
             <i aria-hidden="true" class="iconify" data-icon="feather:chevron-right" />
           </template>
           <RouterLink :to="{ name: 'index' }" class="is-submenu">
-            <i aria-hidden="true" class="lnil lnil-list-alt"></i>
+            <i aria-hidden="true" class="lnil lnil-list-alt pr-3"></i>
             <span>Branch</span>
           </RouterLink>
           <RouterLink :to="{ name: 'index' }" class="is-submenu">
-            <i aria-hidden="true" class="lnil lnil-list-alt"></i>
+            <i aria-hidden="true" class="lnil lnil-list-alt pr-3"></i>
             <span>Item</span>
           </RouterLink>
           <RouterLink :to="{ name: 'index' }" class="is-submenu">
@@ -48,7 +48,7 @@ const emit = defineEmits(['close'])
             <i aria-hidden="true" class="iconify" data-icon="feather:chevron-right" />
           </template>
           <RouterLink :to="{ name: 'index' }" class="is-submenu">
-            <i aria-hidden="true" class="lnil lnil-list-alt"></i>
+            <i aria-hidden="true" class="lnil lnil-list-alt pr-3"></i>
             <span>List</span>
           </RouterLink>
           <RouterLink :to="{ name: 'index' }" class="is-submenu">
