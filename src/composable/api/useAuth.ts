@@ -24,37 +24,35 @@ export function useAuth() {
     try {
       await api.get('/sanctum/csrf-cookie')
     } catch (err: any) {
-      console.error('Error: ', err)
+      throw new Error(err)
     }
   }
 
   /**
    * Sign-in Account
-   * @param data object
+   * @param auth object
    * @returns HTTP status or error message
    */
   const signIn = async (auth: any): Promise<any> => {
     try {
       const { data } = await api.post('/v1/login', auth)
-      console.log(data)
       signInResponse.value = data
     } catch (err: any) {
-      signInResponse.value = err
-      console.error('Error: ', err)
+      throw new Error(err)
     }
   }
 
   /**
    * Check account if legit
-   * @param data object
    * @returns HTTP status or error message
    */
   const getUser = async (): Promise<any> => {
     try {
       const { data } = await api.get('/user')
+      console.log(data)
       loggedInResponse.value = data
     } catch (err: any) {
-      console.error('Error: ', err)
+      throw new Error(err)
     }
   }
 

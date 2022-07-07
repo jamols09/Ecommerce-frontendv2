@@ -1,5 +1,5 @@
 import { acceptHMRUpdate, defineStore } from 'pinia'
-import { ref, computed } from 'vue'
+import { ref /*, computed */ } from 'vue'
 import { useStorage } from '@vueuse/core'
 
 export type UserData = Record<string, any> | null
@@ -12,7 +12,8 @@ export const useUserSession = defineStore('userSession', () => {
   const user = ref<Partial<UserData>>()
   const loading = ref(true)
 
-  const isLoggedIn = computed(() => token.value !== undefined && token.value !== '')
+  // const isLoggedIn = computed(() => token.value !== undefined && token.value !== '')
+  const isLoggedIn = useStorage('logged_in', false)
 
   function setUser(newUser: Partial<UserData>) {
     user.value = newUser
@@ -26,8 +27,13 @@ export const useUserSession = defineStore('userSession', () => {
     loading.value = newLoading
   }
 
+  function setLoggedIn() {
+    isLoggedIn.value = true
+  }
+
   async function logoutUser() {
     token.value = undefined
+    isLoggedIn.value = false
     user.value = undefined
   }
 
@@ -36,6 +42,7 @@ export const useUserSession = defineStore('userSession', () => {
     token,
     isLoggedIn,
     loading,
+    setLoggedIn,
     logoutUser,
     setUser,
     setToken,
