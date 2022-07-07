@@ -8,6 +8,12 @@ export function createApi() {
   // Here we set the base URL for all requests made to the api
   api = axios.create({
     baseURL: import.meta.env.VITE_API_BASE_URL,
+    withCredentials: true,
+    headers: {
+      'Content-type': 'application/json',
+      Accept: 'application/json',
+      'X-Requested-With': 'XMLHttpRequest',
+    },
   })
 
   // We set an interceptor for each request to
@@ -18,7 +24,7 @@ export function createApi() {
     if (userSession.isLoggedIn) {
       config.headers = {
         ...config.headers,
-        Authorization: `Bearer ${userSession.token}`,
+        // Authorization: `Bearer ${userSession.token}`, //token based auth
       }
     }
 

@@ -1,164 +1,153 @@
 <script setup lang="ts">
-import { ref } from 'vue'
+import { onMounted, reactive, ref } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
 import { useHead } from '@vueuse/head'
 
 import { useDarkmode } from '/@src/stores/darkmode'
-import { useUserSession } from '/@src/stores/userSession'
 import { useNotyf } from '/@src/composable/useNotyf'
+import { useAuth } from '/@src/composable/api/useAuth'
+import { useUserSession } from '/@src/stores/userSession'
 import sleep from '/@src/utils/sleep'
 
+const api = useAuth()
 const isLoading = ref(false)
 const darkmode = useDarkmode()
 const router = useRouter()
 const route = useRoute()
-const notif = useNotyf()
+const notyf = useNotyf()
 const userSession = useUserSession()
 const redirect = route.query.redirect as string
+const form = reactive({
+  email: '',
+  password: '',
+})
 
-const handleLogin = async () => {
-  if (!isLoading.value) {
-    isLoading.value = true
+const onLogin = async () => {
+  isLoading.value = true
 
-    await sleep(2000)
-    userSession.setToken('logged-in')
+  try {
+    await api.signIn(form)
+    await sleep(300)
 
-    notif.dismissAll()
-    notif.success('Welcome back, Erik Kovalsky')
+    if (api.signInResponse.value !== undefined) {
+      userSession.setLoggedIn()
 
-    if (redirect) {
-      router.push(redirect)
-    } else {
-      router.push({
-        name: 'app',
-      })
+      if (redirect) {
+        router.push(redirect)
+      } else {
+        router.push({
+          name: 'app',
+        })
+      }
     }
-
-    isLoading.value = false
+  } catch (err: any) {
+    notyf.error('Invalid credentials.')
   }
+
+  isLoading.value = false
 }
 
+onMounted(() => {
+  api.getCookie()
+})
+
 useHead({
-  title: 'Auth Login - Vuero',
+  title: 'Bentii - Login',
 })
 </script>
 
 <template>
-  <div class="auth-wrapper-inner columns is-gapless">
-    <!-- Image section (hidden on mobile) -->
-    <div class="column login-column is-8 h-hidden-mobile h-hidden-tablet-p hero-banner">
-      <div class="hero login-hero is-fullheight is-app-grey">
-        <div class="hero-body">
-          <div class="columns">
-            <div class="column is-10 is-offset-1">
-              <img
-                class="light-image has-light-shadow has-light-border"
-                src="/@src/assets/illustrations/apps/vuero-banking-light.png?format=webp"
-                alt=""
-              />
-              <img
-                class="dark-image has-light-shadow"
-                src="/@src/assets/illustrations/apps/vuero-banking-dark.png?format=webp"
-                alt=""
-              />
-            </div>
-          </div>
-        </div>
-        <div class="hero-footer">
-          <p class="has-text-centered"></p>
-        </div>
+  <div class="auth-wrapper-inner is-single">
+    <!--Fake navigation-->
+    <div class="auth-nav">
+      <div class="left"></div>
+      <div class="center">
+        <RouterLink :to="{ name: 'index' }" class="header-item">
+          <AnimatedLogo width="38px" height="38px" />
+        </RouterLink>
+      </div>
+      <div class="right">
+        <label class="dark-mode ml-auto">
+          <input
+            type="checkbox"
+            :checked="!darkmode.isDark"
+            @change="darkmode.onChange"
+          />
+          <span></span>
+        </label>
       </div>
     </div>
 
-    <!-- Form section -->
-    <div class="column is-4">
-      <div class="hero is-fullheight is-white">
-        <div class="hero-heading">
-          <label
-            class="dark-mode ml-auto"
-            tabindex="0"
-            @keydown.space.prevent="(e) => (e.target as HTMLLabelElement).click()"
-          >
-            <input
-              type="checkbox"
-              :checked="!darkmode.isDark"
-              @change="darkmode.onChange"
-            />
-            <span></span>
-          </label>
-          <div class="auth-logo">
-            <RouterLink :to="{ name: 'index' }">
-              <AnimatedLogo width="36px" height="36px" />
-            </RouterLink>
-          </div>
-        </div>
-        <div class="hero-body">
-          <div class="container">
-            <div class="columns">
-              <div class="column is-12">
-                <div class="auth-content">
-                  <h2>Welcome Back.</h2>
-                  <p>Please sign in to your account</p>
-                  <RouterLink :to="{ name: 'auth-signup' }">
-                    I do not have an account yet
-                  </RouterLink>
-                </div>
-                <div class="auth-form-wrapper">
-                  <!-- Login Form -->
-                  <form @submit.prevent="handleLogin">
-                    <div class="login-form">
-                      <!-- Username -->
-                      <VField>
-                        <VControl icon="feather:user">
-                          <VInput
-                            type="text"
-                            placeholder="Username"
-                            autocomplete="username"
-                          />
-                        </VControl>
-                      </VField>
-
-                      <!-- Password -->
-                      <VField>
-                        <VControl icon="feather:lock">
-                          <VInput
-                            type="password"
-                            placeholder="Password"
-                            autocomplete="current-password"
-                          />
-                        </VControl>
-                      </VField>
-
-                      <!-- Switch -->
-                      <VField>
-                        <VControl class="setting-item">
-                          <VCheckbox label="Remember me" paddingless />
-                        </VControl>
-                      </VField>
-
-                      <!-- Submit -->
-                      <div class="login">
-                        <VButton
-                          :loading="isLoading"
-                          color="primary"
-                          type="submit"
-                          bold
-                          fullwidth
-                          raised
-                        >
-                          Sign In
-                        </VButton>
-                      </div>
-
-                      <div class="forgot-link has-text-centered">
-                        <a>Forgot Password?</a>
-                      </div>
-                    </div>
-                  </form>
-                </div>
+    <!--Single Centered Form-->
+    <div class="single-form-wrap">
+      <div class="inner-wrap">
+        <!--Form-->
+        <div class="form-card">
+          <form @submit.prevent="onLogin">
+            <div class="login-form">
+              <!--Form Title-->
+              <div class="auth-head">
+                <h2>Welcome!</h2>
+                <br />
+                <p>Start managing your business now!</p>
               </div>
+
+              <V-Field>
+                <V-Control icon="feather:mail">
+                  <input
+                    v-model="form.email"
+                    class="input"
+                    type="email"
+                    placeholder="Email"
+                    autocomplete="off"
+                  />
+                </V-Control>
+              </V-Field>
+              <V-Field>
+                <V-Control icon="feather:lock">
+                  <input
+                    v-model="form.password"
+                    class="input"
+                    type="password"
+                    placeholder="Password"
+                    autocomplete="off"
+                  />
+                </V-Control>
+              </V-Field>
+              <!-- Redirect -->
+              <V-Field class="forgot-link">
+                <small>
+                  <RouterLink :to="{ name: 'auth-login' }">
+                    <u>Forgot password?</u>
+                  </RouterLink>
+                </small>
+              </V-Field>
+
+              <!-- Submit -->
+              <V-Field>
+                <V-Control class="login">
+                  <V-Button
+                    :loading="isLoading"
+                    type="submit"
+                    color="primary"
+                    bold
+                    fullwidth
+                    raised
+                    >Sign In</V-Button
+                  >
+                </V-Control>
+              </V-Field>
+              <!-- Redirect -->
+              <V-Field class="forgot-link">
+                <small class="dark-inverted">
+                  Don't have account yet?
+                  <RouterLink :to="{ name: 'auth-signup' }">
+                    <u>Sign-up here!</u>
+                  </RouterLink>
+                </small>
+              </V-Field>
             </div>
-          </div>
+          </form>
         </div>
       </div>
     </div>
