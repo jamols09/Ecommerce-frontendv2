@@ -3,11 +3,10 @@ import 'simple-datatables/src/style.css'
 </script>
 
 <script setup lang="ts">
-import { computed, onMounted, ref, watch, watchEffect } from 'vue'
+import { computed, onMounted, ref, watch } from 'vue'
 import { debouncedWatch } from '@vueuse/shared'
 import type { IData, IHeader } from '/@src/models/table'
 import { useStorage } from '@vueuse/core'
-import { branch } from '/@src/static/product'
 
 interface ITableProps {
   headers: IHeader[]
@@ -96,7 +95,7 @@ onMounted(() => {
             <select
               v-model="rowCount"
               class="table-selectOption"
-              @change="onSetRows(rowCount)"
+              @blur="onSetRows(rowCount)"
             >
               <option
                 v-for="(number, index) in props.totalRows"
@@ -125,16 +124,8 @@ onMounted(() => {
       <div class="group-right is-pulled-right">
         <div class="table-searchType mr-3">
           <label>
-            <select
-              v-model="type"
-              class="table-searchOption"
-              @click="emit('type', type)"
-            >
-              <option
-                v-for="(opt, index) in props.searchType"
-                :key="index"
-                :value="opt"
-              >
+            <select v-model="type" class="table-searchOption" @click="emit('type', type)">
+              <option v-for="(opt, index) in props.searchType" :key="index" :value="opt">
                 {{ opt }}
               </option>
             </select>
@@ -293,6 +284,7 @@ onMounted(() => {
 
   .group-left {
     display: inline-flex;
+
     .table-rowDropdown {
       .table-selectOption {
         color: var(--dark-text);
@@ -308,6 +300,7 @@ onMounted(() => {
 
   .group-right {
     display: inline-flex;
+
     .table-searchInput,
     .table-searchOption {
       padding: 6px 12px;
@@ -332,6 +325,7 @@ onMounted(() => {
       color: var(--dark-dark-text);
       vertical-align: middle;
       text-align: left;
+
       a.table-sorter {
         text-decoration: none;
         color: inherit;
@@ -352,6 +346,7 @@ onMounted(() => {
   .table {
     border-color: var(--dark-sidebar-light-12);
   }
+
   .table-searchOption,
   .table-searchInput,
   .table-selectOption {

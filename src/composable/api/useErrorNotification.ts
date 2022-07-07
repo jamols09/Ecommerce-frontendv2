@@ -1,4 +1,4 @@
-import useNotyf from '../useNotyf'
+import { useNotyf } from '../useNotyf'
 const notif = useNotyf()
 class useErrorNotification {
   error({ errors, error }: any) {
