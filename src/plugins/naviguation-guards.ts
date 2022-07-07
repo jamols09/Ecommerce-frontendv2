@@ -36,7 +36,6 @@ export default definePlugin(({ router, api, pinia }) => {
         // Do api request call to retreive user profile.
         // Note that the api is provided with json-server
         const { data: user } = await api.get('/user')
-        console.log(user)
         userSession.setUser(user)
         notyf.success(`Welcome back, ${user.last_name}`)
       } catch (err) {

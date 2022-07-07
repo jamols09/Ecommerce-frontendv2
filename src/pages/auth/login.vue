@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { onMounted, reactive, ref } from 'vue'
+import { onBeforeMount, onMounted, reactive, ref } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
 import { useHead } from '@vueuse/head'
 
@@ -46,6 +46,16 @@ const onLogin = async () => {
 
   isLoading.value = false
 }
+
+onBeforeMount(() => {
+  // if user is logged in redirect to dashboard
+  // fix needed: the dom is still rendered before redirected to dashboard
+  if (userSession.isLoggedIn) {
+    router.push({
+      name: 'app',
+    })
+  }
+})
 
 onMounted(() => {
   api.getCookie()

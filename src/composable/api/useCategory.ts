@@ -1,7 +1,7 @@
 import { ref } from 'vue'
 import { useApi } from '/@src/composable/useApi'
 import useErrorNotification from './useErrorNotification'
-import useNotyf from '../useNotyf'
+import { useNotyf } from '../useNotyf'
 import useNotificationType from './useNotificationType'
 
 const notifType = useNotificationType.notifType
@@ -104,10 +104,7 @@ export function useCategory() {
    * @description Update branch details by id
    * @param object branch
    */
-  const update = async (
-    e: any,
-    i: number | string | string[]
-  ): Promise<any> => {
+  const update = async (e: any, i: number | string | string[]): Promise<any> => {
     isLoading.value = true
     try {
       await api.patch(`/v1/category/${i}`, e)

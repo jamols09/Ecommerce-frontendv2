@@ -27,13 +27,13 @@ const emit = defineEmits(['close'])
             Inventories
             <i aria-hidden="true" class="iconify" data-icon="feather:chevron-right" />
           </template>
-          <RouterLink :to="{ name: 'index' }" class="is-submenu">
+          <RouterLink :to="{ name: 'app-product-inventory-branch' }" class="is-submenu">
             <i aria-hidden="true" class="lnil lnil-list-alt pr-3"></i>
             <span>Branch</span>
           </RouterLink>
-          <RouterLink :to="{ name: 'index' }" class="is-submenu">
+          <RouterLink :to="{ name: 'app-product-inventory-list' }" class="is-submenu">
             <i aria-hidden="true" class="lnil lnil-list-alt pr-3"></i>
-            <span>Item</span>
+            <span>List</span>
           </RouterLink>
           <RouterLink :to="{ name: 'index' }" class="is-submenu">
             <i aria-hidden="true" class="lnil lnil-circle-plus pr-3"></i>
@@ -47,7 +47,7 @@ const emit = defineEmits(['close'])
             Categories
             <i aria-hidden="true" class="iconify" data-icon="feather:chevron-right" />
           </template>
-          <RouterLink :to="{ name: 'index' }" class="is-submenu">
+          <RouterLink :to="{ name: 'app-product-category-list' }" class="is-submenu">
             <i aria-hidden="true" class="lnil lnil-list-alt pr-3"></i>
             <span>List</span>
           </RouterLink>

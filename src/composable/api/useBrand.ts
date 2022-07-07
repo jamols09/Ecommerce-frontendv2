@@ -1,7 +1,7 @@
 import { ref } from 'vue'
 import { useApi } from '/@src/composable/useApi'
 import useErrorNotification from './useErrorNotification'
-import useNotyf from '../useNotyf'
+import { useNotyf } from '../useNotyf'
 
 const createResponse = ref()
 const dropdownResponse = ref()

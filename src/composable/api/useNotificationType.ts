@@ -1,5 +1,4 @@
-import useNotyf from '../useNotyf'
-const notif = useNotyf()
+import { useNotyf } from '../useNotyf'
 
 /* Optional Notification */
 class useNotificationType {
