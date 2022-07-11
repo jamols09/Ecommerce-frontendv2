@@ -25,7 +25,7 @@ const emit = defineEmits(['close'])
             Customers
             <i aria-hidden="true" class="iconify" data-icon="feather:chevron-right" />
           </template>
-          <RouterLink :to="{ name: 'index' }" class="is-submenu">
+          <RouterLink :to="{ name: 'app-people-customers-list' }" class="is-submenu">
             <i aria-hidden="true" class="lnil lnil-list-alt pr-3"></i>
             <span>List</span>
           </RouterLink>
@@ -73,7 +73,7 @@ const emit = defineEmits(['close'])
             Employees
             <i aria-hidden="true" class="iconify" data-icon="feather:chevron-right" />
           </template>
-          <RouterLink :to="{ name: 'index' }" class="is-submenu">
+          <RouterLink :to="{ name: 'app-product-category-list' }" class="is-submenu">
             <i aria-hidden="true" class="lnil lnil-list-alt pr-3"></i>
             <span>List</span>
           </RouterLink>

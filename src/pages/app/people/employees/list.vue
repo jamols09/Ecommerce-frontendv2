@@ -1,24 +1,24 @@
 <script setup lang="ts">
 import { onMounted, reactive, ref, watch } from 'vue'
-import { useBranch } from '/@src/composable/api/useBranch'
+import { useUser } from '/@src/composable/api/useUser'
 import { useViewWrapper } from '/@src/stores/viewWrapper'
 
 const viewWrapper = useViewWrapper()
-viewWrapper.setPageTitle('Order list')
+viewWrapper.setPageTitle('Category list')
 
-const api = useBranch()
+const api = useUser()
 const table = reactive({
-  searchType: ['Name', 'Code'],
+  searchType: ['Username', 'Created At'],
   totalRows: [10, 15, 30, 50],
   headers: [
+    { name: '' },
     { name: 'Active' },
-    { name: 'Name' },
-    { name: 'Code' },
-    { name: 'City' },
-    { name: 'Barangay' },
-    { name: 'Line 1' },
-    { name: 'Telephone' },
-    { name: 'Mobile' },
+    { name: 'Username' },
+    { name: 'First Name' },
+    { name: 'Middle Name' },
+    { name: 'Last Name' },
+    { name: 'Email' },
+    { name: 'Created At' },
     { name: 'Action' },
   ],
   data: [],
@@ -50,6 +50,7 @@ const type = ref()
 const search = ref()
 const page = ref(1)
 const reset = ref(false)
+
 const onSearch = (e: any) => {
   search.value = e
   onCallTable()
@@ -71,7 +72,7 @@ const onRemove = async (e?: any) => {
   onCallTable()
 }
 
-const onSort = (e?: any) => {
+const onSort = (e: string) => {
   table.order = table.order === '' ? '-' : ''
   table.column = e?.toLocaleLowerCase().replace(/ /g, '_')
   onCallTable()
@@ -93,6 +94,7 @@ const onCallTable = async () => {
   await api.table({
     row: rowCount.value ?? table.totalRows[0],
     [`filter[${query}]`]: search.value,
+    [`filter[account]`]: 'admin',
     page: page.value ?? '1',
     sort: sort,
   })
@@ -101,15 +103,17 @@ const onCallTable = async () => {
   table.data = data
   pagination.value = api.tableResponse.value
 }
+
 watch(rowCount, () => {
   onCallTable()
 })
+
 onMounted(() => onCallTable())
 </script>
 
 <template>
   <div>
-    <BranchTable
+    <EmployeeTable
       :total-rows="
         table.totalRows.sort((a, b) => {
           return a - b
@@ -134,16 +138,6 @@ onMounted(() => onCallTable())
         @change="onChangePage"
         @set-link="onChangePage({ select: $event })"
       />
-    </BranchTable>
+    </EmployeeTable>
   </div>
 </template>
-
-<!-- <style lang="scss" scoped>
-@media screen and (max-width: 2048px) {
-  .page-content-wrapper {
-    width: 100%;
-    max-width: 2048px !important;
-    margin: 0 auto;
-  }
-}
-</style> -->
