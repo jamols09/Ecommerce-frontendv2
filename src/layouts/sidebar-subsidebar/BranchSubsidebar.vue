@@ -17,7 +17,7 @@ const emit = defineEmits(['close'])
     <div class="inner" data-simplebar>
       <ul>
         <li>
-          <RouterLink :to="{ name: 'app' }" title="List order">
+          <RouterLink :to="{ name: 'app-branch-list' }" title="List order">
             <i aria-hidden="true" class="lnil lnil-list pr-3"></i>
             List
           </RouterLink>
