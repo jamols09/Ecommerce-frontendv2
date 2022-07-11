@@ -127,7 +127,7 @@ onMounted(() => onCallTable())
       @activate="onSetStatus($event, 'activate')"
       @remove="onRemove($event)"
       @deactivate="onSetStatus($event, 'deactivate')"
-      @rowCount="rowCount = $event"
+      @row-count="rowCount = $event"
       @type="type = $event"
       @search="onSearch"
       @sort="onSort"
