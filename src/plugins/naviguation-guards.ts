@@ -41,7 +41,7 @@ export default definePlugin(({ router, api, pinia }) => {
       } catch (err) {
         // delete stored token if it fails
         userSession.logoutUser()
-        notyf.error('Your session is invalid')
+        notyf.error('Your session is invalid.')
 
         if (to.meta.requiresAuth) {
           // redirect the user somewhere
@@ -57,7 +57,7 @@ export default definePlugin(({ router, api, pinia }) => {
       // 2. If the requires auth via requiresAuth meta, check if user is logged in
       // if not, redirect to login page.
       notyf.error({
-        message: 'Sorry, you should loggin to access this section.',
+        message: 'Account is needed to view this section.',
         duration: 7000,
       })
 

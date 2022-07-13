@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { onBeforeMount, onMounted, reactive, ref } from 'vue'
+import { onBeforeMount, reactive, ref } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
 import { useHead } from '@vueuse/head'
 
@@ -26,6 +26,8 @@ const onLogin = async () => {
   isLoading.value = true
 
   try {
+    await api.getCookie()
+    await sleep(500)
     await api.signIn(form)
     await sleep(300)
 
@@ -41,7 +43,7 @@ const onLogin = async () => {
       }
     }
   } catch (err: any) {
-    notyf.error('Invalid credentials.')
+    notyf.error('Account not found, invalid credentials.')
   }
 
   isLoading.value = false
@@ -55,10 +57,6 @@ onBeforeMount(() => {
       name: 'app',
     })
   }
-})
-
-onMounted(() => {
-  api.getCookie()
 })
 
 useHead({
